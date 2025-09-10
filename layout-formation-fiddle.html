@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Base so that all relative URLs resolve to your repo’s raw content -->
+  <base href="https://raw.githubusercontent.com/ZACKGORT/scroll/main/">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Layout Formation on Scroll | Codrops</title>
+  <!-- GSAP core + plugins -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <!-- ImagesLoaded -->
+  <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <!-- Lenis smooth scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis/dist/lenis.min.js"></script>
+  <style>
+/* ===== inlined css/base.css ===== */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 16px;
+  --color-text: #f5f3ee;
+  --color-bg: #0e0d0e;
+  --color-link: #ffffff;
+  --color-link-hover: #ffffff;
+  --page-padding: 0.5rem;
+  --grid-gap: var(--page-padding);
+  --color-bg-content: #0e0d0e;
+  --color-bg-frame: #7a7364;
+  --color-border: #46443e;
+}
+
+html,
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  font-family: "area-variable", sans-serif;
+  font-variation-settings: "slnt" 0, "wdth" 100, "wght" 450, "INKT" 0;
+  font-weight: 450;
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page Loader */
+.js .loading::before,
+.js .loading::after {
+  content: '';
+  position: fixed;
+  z-index: 1000;
+}
+.js .loading::before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg);
+}
+.js .loading::after {
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  border-radius: 50%;
+  opacity: 0.4;
+  background: var(--color-link);
+  animation: loaderAnim 0.7s linear infinite alternate forwards;
+}
+@keyframes loaderAnim {
+  to {
+    opacity: 1;
+    transform: scale3d(0.5,0.5,1);
+  }
+}
+
+ a {
+  text-decoration: none;
+  color: var(--color-link);
+  outline: none;
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: underline;
+  color: var(--color-link-hover);
+  outline: none;
+}
+a:focus {
+  outline: none;
+  background: lightgrey;
+}
+a:focus:not(:focus-visible) {
+  background: transparent;
+}
+a:focus-visible {
+  outline: 2px solid red;
+  background: transparent;
+}
+
+.unbutton {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.unbutton:focus {
+  outline: none;
+}
+
+.type-tiny,
+.cdawrap {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-variation-settings: "wght" 400;
+}
+
+.frame {
+  padding: var(--page-padding);
+  text-transform: uppercase;
+  position: relative;
+  display: grid;
+  line-height: 1;
+  height: 100vh;
+  grid-row-gap: 0.5rem;
+  grid-column-gap: 2rem;
+  justify-items: start;
+  align-content: start;
+  background: var(--color-bg-frame);
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto auto 1fr;
+  grid-template-areas:
+    'logo'
+    'tags'
+    'sponsor'
+    'subline'
+    'title';
+}
+.frame #cdawrap {
+  justify-self: start;
+}
+.frame__logo {
+  grid-area: logo;
+  padding-bottom: 0.15rem;
+  font-size: 1.5rem;
+  font-family: "bricolage-grotesque-48", sans-serif;
+}
+.frame__tags {
+  grid-area: tags;
+}
+.frame__links {
+  grid-area: sponsor;
+}
+.frame__subline {
+  grid-area: subline;
+}
+.frame__title {
+  grid-area: title;
+  white-space: nowrap;
+  font-size: clamp(2rem,20vw,20rem);
+  margin: 0;
+  letter-spacing: -0.05em;
+  padding-top: 0.15em;
+  font-weight: 400;
+  line-height: 0.55;
+  text-indent: -0.065em;
+  word-spacing: 0.15em;
+  font-family: "bricolage-grotesque-48", sans-serif;
+}
+
+.flex-line {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.content {
+  position: relative;
+  min-height: 100dvh;
+  background: var(--color-bg-content);
+  align-content: center;
+}
+.content--cutoff {
+  overflow: hidden;
+}
+.content--padded {
+  padding: var(--page-padding);
+}
+.content--full {
+  display: grid;
+  height: 100vh;
+  place-items: center;
+  grid-template-areas: 'main';
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+}
+
+.content__text {
+  font-size: 1.7rem;
+  max-width: 625px;
+  line-height: 1.4;
+  margin: 0.5rem 0;
+  font-weight: 500;
+  font-variation-settings: "wght" 500;
+  text-wrap: balance;
+  letter-spacing: -0.025em;
+}
+
+.content__title {
+  grid-area: main;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.content__title-main {
+  font-size: clamp(2rem, 7vw, 4.5rem);
+  line-height: 1;
+  margin: 0.5rem 0 0;...
