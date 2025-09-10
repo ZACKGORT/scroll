@@ -227,4 +227,99 @@ a:focus-visible {
 .content__title-main {
   font-size: clamp(2rem, 7vw, 4.5rem);
   line-height: 1;
-  margin: 0.5rem 0 0;...
+  margin: 0.5rem 0 0;
+  font-weight: 400;
+  font-variation-settings: "wght" 400;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  font-family: "bricolage-grotesque-48", sans-serif;
+}
+  </style>
+</head>
+<body class="loading">
+  <main>
+    <header class="frame">
+      <h2 class="frame__title">Layout Formation</h2>
+      <div class="frame__subline type-tiny">
+        <span>SCROLL TO EXPLORE.</span> 
+        <nav class="frame__links flex-line">
+          <a href="https://tympanus.net/codrops/?p=80656">Article</a>
+          <a href="https://tympanus.net/codrops/demos/">All demos</a>
+          <a href="https://github.com/codrops/OnScrollLayoutFormations">GitHub</a>
+        </nav>
+      </div>
+      <nav class="frame__tags flex-line type-tiny">
+        <a href="#fintech">#fintech</a>
+        <a href="#social">#social</a>
+        <a href="#ecommerce">#ecommerce</a>
+        <a href="#startup">#startup</a>
+        <a href="#agency">#agency</a>
+      </nav>
+      <span class="frame__logo">LF</span>
+    </header>
+
+    <section id="fintech" class="content content--padded">
+      <div class="content__title">
+        <h2 class="content__title-main">Fintech</h2>
+      </div>
+      <p class="content__text">Financial technology solutions that revolutionize the way we interact with money, investments, and digital payments.</p>
+      <!-- content for fintech section -->
+    </section>
+
+    <section id="social" class="content content--full">
+      <div class="content__title">
+        <h2 class="content__title-main">Social</h2>
+      </div>
+      <p class="content__text">Connecting people through innovative social platforms and community-driven experiences.</p>
+      <!-- content for social section -->
+    </section>
+
+    <section id="ecommerce" class="content content--cutoff">
+      <div class="content__title">
+        <h2 class="content__title-main">Ecommerce</h2>
+      </div>
+      <p class="content__text">Next-generation online shopping experiences with seamless user journeys and personalized recommendations.</p>
+      <!-- content for ecommerce section -->
+    </section>
+
+    <section id="startup" class="content content--padded">
+      <div class="content__title">
+        <h2 class="content__title-main">Startup</h2>
+      </div>
+      <p class="content__text">Innovative startup solutions that disrupt traditional industries and create new market opportunities.</p>
+      <!-- content for startup section -->
+    </section>
+
+    <section id="agency" class="content content--full">
+      <div class="content__title">
+        <h2 class="content__title-main">Agency</h2>
+      </div>
+      <p class="content__text">Creative agency work that combines strategy, design, and technology to deliver exceptional brand experiences.</p>
+      <!-- content for agency section -->
+    </section>
+  </main>
+
+  <script>
+    // Basic smooth scrolling functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Remove loading class when page is ready
+      document.body.classList.remove('loading');
+      
+      // Add smooth scrolling to anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
